@@ -9,14 +9,14 @@ Module Module1
     myNewCar.year = 1986
     myNewCar.color = "Silver"
     
-    With myNewCar
+    'With myNewCar
     
-      .make = "Oldsmobile"
-      .model = "Cutlas Supreme"
-      .year = 1986
-      .color = "Silver"
+    '  '.make = "Oldsmobile"
+    '  '.model = "Cutlas Supreme"
+    '  '.year = 1986
+    '  '.color = "Silver"
     
-    End With
+    'End With
   
   End Sub
 
