@@ -18,7 +18,7 @@ Module Module1
     
     'End With
     
-    Console.WriteLine("{0} - {1} - {2}", myNewCar.Make, myNewCar.Model, myNewCar.Year)
+    Console.WriteLine(myNewCar.determineMarketValue())
     Console.ReadLine()
   
   End Sub
