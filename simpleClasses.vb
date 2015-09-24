@@ -17,7 +17,16 @@ Module Module1
     '  '.color = "Silver"
     
     'End With
+    
+    Console.WriteLine("{0} - {1} - {2}", myNewCar.Make, myNewCar.Model, myNewCar.Year)
+    Console.ReadLine()
   
   End Sub
+  
+  'Function determineMarketValue(ByVal myCar As car) As Double
+
+  '  'Return 100.00
+
+  'End Function
 
 End Module
