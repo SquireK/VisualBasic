@@ -154,7 +154,7 @@ Public Class frmMain
     Private Sub btnCalculate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCalculate.Click
 
         'sets the total amount of money to a variable
-        Dim dcmMoneyLeft As Decimal = numInitMoney.Value
+        Dim dcmMoneyLeft As Decimal = (1 - numInitMoney.Value)
         'sets all of the different coins
         Dim intHalfDollar As Integer = 0
         Dim intQuarter As Integer = 0
