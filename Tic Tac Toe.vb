@@ -1,12 +1,13 @@
-Public Class frmMain
-
+    Public Class frmMain
+    
     Dim turn As String = "Red" 'This variable logs which person's turn it currently is. 'Red' = Player 1 'Blue" = Player 2
     Dim turnCounter As Integer = 1 'This variable keeps track of the turns in a game.
+    Dim gameMode As Integer = 0
     Dim playerScores As Integer() = {0, 0} 'This integer array keeps track of each player's score.
 
 
     'This sub checks to see if someone has won the game, congratulates that player, and adds 1 to the player who won the game's score.
-    Private Function checkForWin(button1 As Object, button2 As Object, button3 As Object)
+    Private Function checkForWin(ByVal button1 As Object, ByVal button2 As Object, ByVal button3 As Object)
 
         If button1.text = "X" And button2.text = "X" And button3.text = "X" Then
             MsgBox("Player 1 has won!", MsgBoxStyle.OkOnly)
@@ -25,7 +26,6 @@ Public Class frmMain
 
     End Function
 
-
     'This sub sets the text boxes' new text and decides which turn it is.
     Private Sub determineNextTurn()
 
@@ -38,17 +38,18 @@ Public Class frmMain
             turn = "Red"
         End If
 
+
         'The code below handles a win and stalemate scenerio.
         turnCounter += 1 'This adds 1 to the current value turnCounter
         'This if checks to see if someone has won the game and then resets the game board.
         If turnCounter > 4 Then
-            If checkForWin(btnTopLeft, btnMidLeft, btnLowLeft) Or
-                checkForWin(btnTopCenter, btnMidCenter, btnLowCenter) Or
-                checkForWin(btnTopRight, btnMidRight, btnLowRight) Or
-                checkForWin(btnTopLeft, btnTopCenter, btnTopRight) Or
-                checkForWin(btnMidLeft, btnMidCenter, btnMidRight) Or
-                checkForWin(btnLowLeft, btnLowCenter, btnLowRight) Or
-                checkForWin(btnTopLeft, btnMidCenter, btnLowRight) Or
+            If checkForWin(btnTopLeft, btnMidLeft, btnLowLeft) Or _
+                checkForWin(btnTopCenter, btnMidCenter, btnLowCenter) Or _
+                checkForWin(btnTopRight, btnMidRight, btnLowRight) Or _
+                checkForWin(btnTopLeft, btnTopCenter, btnTopRight) Or _
+                checkForWin(btnMidLeft, btnMidCenter, btnMidRight) Or _
+                checkForWin(btnLowLeft, btnLowCenter, btnLowRight) Or _
+                checkForWin(btnTopLeft, btnMidCenter, btnLowRight) Or _
                 checkForWin(btnTopRight, btnMidCenter, btnLowLeft) = True Then
                 resetBoard()
                 Exit Sub
@@ -71,7 +72,7 @@ Public Class frmMain
     End Sub
 
     'This sub runs resetBoard.
-    Private Sub btnClearBoard_Click(sender As Object, e As EventArgs) Handles btnClearBoard.Click
+    Private Sub btnClearBoard_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnClearBoard.Click
 
         resetBoard()
 
@@ -92,11 +93,14 @@ Public Class frmMain
         lblTurn.Text = "Player X's Turn"
         toggleButtons(False, True)
         turnCounter = 1
+        playerScores(0) = 0
+        playerScores(1) = 0
+        gameMode = 0
 
     End Sub
 
     'This sub determines the turn for the buttons, sets the button's text to X or O, disables the button for future selection, and calls the nexTurn() sub procedure.
-    Private Sub determineTurn(button As Object)
+    Private Sub determineTurn(ByVal button As Object)
 
         If turn = "Red" Then
             button.text = "X"
@@ -104,12 +108,17 @@ Public Class frmMain
             button.text = "O"
         End If
         button.Enabled = False
-        determineNextTurn()
+        If gameMode = 1 Then
+            determineNextTurn()
+        ElseIf gameMode = 2 Then
+            turn = "Blue"
+            computerDecision()
+        End If
 
     End Sub
 
     'This sub will toggle the buttons on or off depending on the parameter and resets the text within the boxes depending on the second parameter.
-    Private Sub toggleButtons(toggle As Boolean, resetText As Boolean)
+    Private Sub toggleButtons(ByVal toggle As Boolean, ByVal resetText As Boolean)
 
         btnTopLeft.Enabled = toggle
         btnTopCenter.Enabled = toggle
@@ -135,9 +144,8 @@ Public Class frmMain
 
     End Sub
 
-
     'This sub sets up a multiplayer game.
-    Private Sub btnMultiPlayer_Click(sender As Object, e As EventArgs) Handles btnMultiPlayer.Click
+    Private Sub btnMultiPlayer_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnMultiPlayer.Click
 
         btnMultiPlayer.Visible = False
         btnSinglePlayer.Visible = False
@@ -146,82 +154,175 @@ Public Class frmMain
         lblPlayer1Score.Visible = True
         lblPlayer2Score.Visible = True
         lblTurn.Visible = True
-        btnReset.Location = New Point(527, 12)
-        btnClearBoard.Location = New Point(527, 73)
+        btnReset.Location = New Point(328, 16)
+        btnClearBoard.Location = New Point(328, 72)
         lblTurn.Text = "Player 1's Turn"
         turn = "Red"
         toggleButtons(True, True)
+        gameMode = 1
 
     End Sub
 
     'The form runs reset on reset.
-    Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
+    Private Sub btnReset_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnReset.Click
 
         reset()
 
     End Sub
 
     'The form runs reset on load.
-    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub frmMain_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
 
         reset()
 
     End Sub
 
 #Region "Tic Tac Toe Buttons"
-    Private Sub btnTopLeft_Click(sender As Object, e As EventArgs) Handles btnTopLeft.Click
+    Private Sub btnTopLeft_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnTopLeft.Click
 
         determineTurn(btnTopLeft)
 
     End Sub
 
-    Private Sub btnTopCenter_Click(sender As Object, e As EventArgs) Handles btnTopCenter.Click
+    Private Sub btnTopCenter_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnTopCenter.Click
 
         determineTurn(btnTopCenter)
 
     End Sub
 
-    Private Sub btnTopRight_Click(sender As Object, e As EventArgs) Handles btnTopRight.Click
+    Private Sub btnTopRight_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnTopRight.Click
 
         determineTurn(btnTopRight)
 
     End Sub
 
-    Private Sub btnMidLeft_Click(sender As Object, e As EventArgs) Handles btnMidLeft.Click
+    Private Sub btnMidLeft_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMidLeft.Click
 
         determineTurn(btnMidLeft)
 
     End Sub
 
-    Private Sub btnMidCenter_Click(sender As Object, e As EventArgs) Handles btnMidCenter.Click
+    Private Sub btnMidCenter_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnMidCenter.Click
 
         determineTurn(btnMidCenter)
 
     End Sub
 
-    Private Sub btnMidRight_Click(sender As Object, e As EventArgs) Handles btnMidRight.Click
+    Private Sub btnMidRight_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnMidRight.Click
 
         determineTurn(btnMidRight)
 
     End Sub
 
-    Private Sub btnLowLeft_Click(sender As Object, e As EventArgs) Handles btnLowLeft.Click
+    Private Sub btnLowLeft_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLowLeft.Click
 
         determineTurn(btnLowLeft)
 
     End Sub
 
-    Private Sub btnLowCenter_Click(sender As Object, e As EventArgs) Handles btnLowCenter.Click
+    Private Sub btnLowCenter_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnLowCenter.Click
 
         determineTurn(btnLowCenter)
 
     End Sub
 
-    Private Sub btnLowRight_Click(sender As Object, e As EventArgs) Handles btnLowRight.Click
+    Private Sub btnLowRight_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLowRight.Click
 
         determineTurn(btnLowRight)
 
     End Sub
 #End Region 'This region handles the 9 squares. They call the determineTurn subprocedure.
+
+    'This sub initializes the single player game.
+    Private Sub btnSinglePlayer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSinglePlayer.Click
+
+        btnMultiPlayer.Visible = False
+        btnSinglePlayer.Visible = False
+        btnReset.Visible = True
+        lblPlayer1Score.Visible = True
+        lblPlayer2Score.Visible = True
+        lblPlayer2Score.Text = "Computer: 0"
+        btnReset.Location = New Point(328, 16)
+        toggleButtons(True, True)
+        turn = "Red"
+        gameMode = 2
+
+    End Sub
+
+    Private Sub computerDecision()
+
+        If checkButton(btnTopLeft, btnTopRight, btnTopCenter) Then '1
+            Exit Sub
+        ElseIf checkButton(btnTopLeft, btnTopCenter, btnTopRight) Then '2
+            Exit Sub
+        ElseIf checkButton(btnTopCenter, btnTopRight, btnTopLeft) Then '3
+            Exit Sub
+        ElseIf checkButton(btnMidLeft, btnMidRight, btnMidCenter) Then '4
+            Exit Sub
+        ElseIf checkButton(btnMidLeft, btnMidCenter, btnMidRight) Then '5
+            Exit Sub
+        ElseIf checkButton(btnMidCenter, btnMidRight, btnMidLeft) Then '6
+            Exit Sub
+        ElseIf checkButton(btnLowLeft, btnLowRight, btnLowCenter) Then '7
+            Exit Sub
+        ElseIf checkButton(btnLowLeft, btnLowCenter, btnLowRight) Then '8
+            Exit Sub
+        ElseIf checkButton(btnLowCenter, btnLowRight, btnLowLeft) Then '9
+            Exit Sub
+        ElseIf checkButton(btnTopLeft, btnLowRight, btnMidCenter) Then '10
+            Exit Sub
+        ElseIf checkButton(btnTopLeft, btnMidCenter, btnLowRight) Then '11
+            Exit Sub
+        ElseIf checkButton(btnMidCenter, btnLowRight, btnTopLeft) Then '12
+            Exit Sub
+        ElseIf checkButton(btnTopRight, btnLowLeft, btnMidCenter) Then '13
+            Exit Sub
+        ElseIf checkButton(btnTopRight, btnMidCenter, btnLowLeft) Then '14
+            Exit Sub
+        ElseIf checkButton(btnLowLeft, btnMidCenter, btnTopRight) Then '15
+            Exit Sub
+        ElseIf checkButton(btnTopLeft, btnLowLeft, btnMidLeft) Then '16
+            Exit Sub
+        ElseIf checkButton(btnTopLeft, btnMidLeft, btnLowLeft) Then '17
+            Exit Sub
+        ElseIf checkButton(btnLowLeft, btnMidLeft, btnTopLeft) Then '18
+            Exit Sub
+        ElseIf checkButton(btnTopCenter, btnLowCenter, btnMidCenter) Then '19
+            Exit Sub
+        ElseIf checkButton(btnTopCenter, btnMidCenter, btnLowCenter) Then '20
+            Exit Sub
+        ElseIf checkButton(btnLowCenter, btnMidCenter, btnTopCenter) Then '21
+            Exit Sub
+        ElseIf checkButton(btnTopRight, btnLowRight, btnMidRight) Then '22
+            Exit Sub
+        ElseIf checkButton(btnTopRight, btnMidRight, btnLowRight) Then '23
+            Exit Sub
+        ElseIf checkButton(btnLowRight, btnMidRight, btnTopRight) Then '24
+            Exit Sub
+        Else
+            Dim buttons As Object() = {btnTopLeft, btnTopCenter, btnTopRight, btnMidLeft, btnMidCenter, btnMidRight, btnLowLeft, btnLowCenter, btnLowRight}
+            For counter As Integer = 0 To 8
+                If buttons(counter).Text = "" And buttons(counter).enabled = True Then
+                    buttons(counter).Text = "O"
+                    buttons(counter).Enabled = False
+                    turn = "Red"
+                    Exit Sub
+                End If
+            Next
+        End If
+
+    End Sub
+
+    Private Function checkButton(ByVal button1 As Object, ByVal button2 As Object, ByVal button3 As Object)
+
+        If button1.text = "X" And button2.Text = "X" And button3.Enabled = True Then
+            button3.Text = "O"
+            button3.Enabled = False
+            turn = "Red"
+            Return True
+        End If
+        Return False
+
+    End Function
 
 End Class
