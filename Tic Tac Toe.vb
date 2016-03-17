@@ -1,8 +1,9 @@
     Public Class frmMain
     
     Dim turn As String = "Red" 'This variable logs which person's turn it currently is. 'Red' = Player 1 'Blue" = Player 2
+    Dim lastSelection As Boolean = False 'This variable determines who the previous person's turn was.
     Dim turnCounter As Integer = 1 'This variable keeps track of the turns in a game.
-    Dim gameMode As Integer = 0
+    Dim gameMode As Integer = 0 'This variable tells the program what game mode the user/users are playing.
     Dim playerScores As Integer() = {0, 0} 'This integer array keeps track of each player's score.
 
 
@@ -10,16 +11,23 @@
     Private Function checkForWin(ByVal button1 As Object, ByVal button2 As Object, ByVal button3 As Object)
 
         If button1.text = "X" And button2.text = "X" And button3.text = "X" Then
-            MsgBox("Player 1 has won!", MsgBoxStyle.OkOnly)
-            toggleButtons(False, False)
             playerScores(0) += 1
+            MsgBox("Player 1 has won!", MsgBoxStyle.OKOnly)
             lblPlayer1Score.Text = "Player 1's Score: " & playerScores(0)
+            toggleButtons(False, False)
+            resetBoard()
             Return True
         ElseIf button1.text = "O" And button2.text = "O" And button3.text = "O" Then
-            MsgBox("Player 2 has won!", MsgBoxStyle.OkOnly)
-            toggleButtons(False, False)
             playerScores(1) += 1
-            lblPlayer2Score.Text = "Player 2's Score: " & playerScores(1)
+            If gameMode = 1 Then
+                MsgBox("Player 2 has won!", MsgBoxStyle.OKOnly)
+                lblPlayer2Score.Text = "Player 2's Score: " & playerScores(1)
+            ElseIf gameMode = 2 Then
+                MsgBox("The Computer has won!", MsgBoxStyle.OKOnly)
+                lblPlayer2Score.Text = "Computer: " & playerScores(1)
+            End If
+            toggleButtons(False, False)
+            resetBoard()
             Return True
         End If
         Return False
@@ -30,34 +38,40 @@
     Private Sub determineNextTurn()
 
         'This if statement detemine's whos turn it is.
-        If lblTurn.Text = "Player 1's Turn" And turn = "Red" Then
-            lblTurn.Text = "Player 2's Turn"
-            turn = "Blue"
-        ElseIf lblTurn.Text = "Player 2's Turn" And turn = "Blue" Then
-            lblTurn.Text = "Player 1's Turn"
-            turn = "Red"
+        If gameMode = 1 Then
+            If turn = "Red" Then
+                lblTurn.Text = "Player 2's Turn"
+                turn = "Blue"
+            ElseIf turn = "Blue" Then
+                lblTurn.Text = "Player 1's Turn"
+                turn = "Red"
+            End If
         End If
-
-
         'The code below handles a win and stalemate scenerio.
-        turnCounter += 1 'This adds 1 to the current value turnCounter
+        turnCounter += 1 'This adds 1 to the current value turnCou
         'This if checks to see if someone has won the game and then resets the game board.
         If turnCounter > 4 Then
-            If checkForWin(btnTopLeft, btnMidLeft, btnLowLeft) Or _
-                checkForWin(btnTopCenter, btnMidCenter, btnLowCenter) Or _
-                checkForWin(btnTopRight, btnMidRight, btnLowRight) Or _
-                checkForWin(btnTopLeft, btnTopCenter, btnTopRight) Or _
-                checkForWin(btnMidLeft, btnMidCenter, btnMidRight) Or _
-                checkForWin(btnLowLeft, btnLowCenter, btnLowRight) Or _
-                checkForWin(btnTopLeft, btnMidCenter, btnLowRight) Or _
-                checkForWin(btnTopRight, btnMidCenter, btnLowLeft) = True Then
-                resetBoard()
+            If checkForWin(btnTopLeft, btnMidLeft, btnLowLeft) Then
+                Exit Sub
+            ElseIf checkForWin(btnTopCenter, btnMidCenter, btnLowCenter) Then
+                Exit Sub
+            ElseIf checkForWin(btnTopRight, btnMidRight, btnLowRight) Then
+                Exit Sub
+            ElseIf checkForWin(btnTopLeft, btnTopCenter, btnTopRight) Then
+                Exit Sub
+            ElseIf checkForWin(btnMidLeft, btnMidCenter, btnMidRight) Then
+                Exit Sub
+            ElseIf checkForWin(btnLowLeft, btnLowCenter, btnLowRight) Then
+                Exit Sub
+            ElseIf checkForWin(btnTopLeft, btnMidCenter, btnLowRight) Then
+                Exit Sub
+            ElseIf checkForWin(btnTopRight, btnMidCenter, btnLowLeft) Then
                 Exit Sub
             End If
         End If
         'This if statement checks to see if the game is a stalemate and then resets the game board.
         If turnCounter = 10 Then
-            MsgBox("Stalemate", MsgBoxStyle.OkOnly)
+            MsgBox("Stalemate", MsgBoxStyle.OKOnly)
             resetBoard()
         End If
 
@@ -111,7 +125,7 @@
         If gameMode = 1 Then
             determineNextTurn()
         ElseIf gameMode = 2 Then
-            turn = "Blue"
+            determineNextTurn()
             computerDecision()
         End If
 
@@ -305,7 +319,9 @@
                 If buttons(counter).Text = "" And buttons(counter).enabled = True Then
                     buttons(counter).Text = "O"
                     buttons(counter).Enabled = False
+                    turnCounter += 1
                     turn = "Red"
+                    determineNextTurn()
                     Exit Sub
                 End If
             Next
@@ -318,6 +334,7 @@
         If button1.text = "X" And button2.Text = "X" And button3.Enabled = True Then
             button3.Text = "O"
             button3.Enabled = False
+            turnCounter += 1
             turn = "Red"
             Return True
         End If
