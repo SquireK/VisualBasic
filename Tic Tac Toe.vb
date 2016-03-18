@@ -1,4 +1,275 @@
 Public Class frmMain
+    Inherits System.Windows.Forms.Form
+
+#Region " Windows Form Designer generated code "
+
+    Public Sub New()
+        MyBase.New()
+
+        'This call is required by the Windows Form Designer.
+        InitializeComponent()
+
+        'Add any initialization after the InitializeComponent() call
+
+    End Sub
+
+    'Form overrides dispose to clean up the component list.
+    Protected Overloads Overrides Sub Dispose(ByVal disposing As Boolean)
+        If disposing Then
+            If Not (components Is Nothing) Then
+                components.Dispose()
+            End If
+        End If
+        MyBase.Dispose(disposing)
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    Friend WithEvents btnMidRight As System.Windows.Forms.Button
+    Friend WithEvents btnTopLeft As System.Windows.Forms.Button
+    Friend WithEvents btnTopRight As System.Windows.Forms.Button
+    Friend WithEvents btnTopCenter As System.Windows.Forms.Button
+    Friend WithEvents btnMidCenter As System.Windows.Forms.Button
+    Friend WithEvents btnMidLeft As System.Windows.Forms.Button
+    Friend WithEvents btnLowLeft As System.Windows.Forms.Button
+    Friend WithEvents btnLowCenter As System.Windows.Forms.Button
+    Friend WithEvents btnLowRight As System.Windows.Forms.Button
+    Friend WithEvents btnSinglePlayer As System.Windows.Forms.Button
+    Friend WithEvents btnReset As System.Windows.Forms.Button
+    Friend WithEvents btnMultiPlayer As System.Windows.Forms.Button
+    Friend WithEvents lblPlayer1Score As System.Windows.Forms.Label
+    Friend WithEvents lblPlayer2Score As System.Windows.Forms.Label
+    Friend WithEvents lblTurn As System.Windows.Forms.Label
+    Friend WithEvents btnClearBoard As System.Windows.Forms.Button
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(frmMain))
+        Me.btnTopLeft = New System.Windows.Forms.Button
+        Me.btnTopCenter = New System.Windows.Forms.Button
+        Me.btnTopRight = New System.Windows.Forms.Button
+        Me.btnMidLeft = New System.Windows.Forms.Button
+        Me.btnMidCenter = New System.Windows.Forms.Button
+        Me.btnMidRight = New System.Windows.Forms.Button
+        Me.btnLowLeft = New System.Windows.Forms.Button
+        Me.btnLowCenter = New System.Windows.Forms.Button
+        Me.btnLowRight = New System.Windows.Forms.Button
+        Me.btnSinglePlayer = New System.Windows.Forms.Button
+        Me.btnReset = New System.Windows.Forms.Button
+        Me.lblPlayer1Score = New System.Windows.Forms.Label
+        Me.lblPlayer2Score = New System.Windows.Forms.Label
+        Me.btnMultiPlayer = New System.Windows.Forms.Button
+        Me.lblTurn = New System.Windows.Forms.Label
+        Me.btnClearBoard = New System.Windows.Forms.Button
+        Me.SuspendLayout()
+        '
+        'btnTopLeft
+        '
+        Me.btnTopLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnTopLeft.Font = New System.Drawing.Font("Trebuchet MS", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnTopLeft.Location = New System.Drawing.Point(16, 16)
+        Me.btnTopLeft.Name = "btnTopLeft"
+        Me.btnTopLeft.Size = New System.Drawing.Size(96, 96)
+        Me.btnTopLeft.TabIndex = 0
+        Me.btnTopLeft.TabStop = False
+        '
+        'btnTopCenter
+        '
+        Me.btnTopCenter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnTopCenter.Font = New System.Drawing.Font("Trebuchet MS", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnTopCenter.Location = New System.Drawing.Point(112, 16)
+        Me.btnTopCenter.Name = "btnTopCenter"
+        Me.btnTopCenter.Size = New System.Drawing.Size(96, 96)
+        Me.btnTopCenter.TabIndex = 1
+        Me.btnTopCenter.TabStop = False
+        '
+        'btnTopRight
+        '
+        Me.btnTopRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnTopRight.Font = New System.Drawing.Font("Trebuchet MS", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnTopRight.Location = New System.Drawing.Point(208, 16)
+        Me.btnTopRight.Name = "btnTopRight"
+        Me.btnTopRight.Size = New System.Drawing.Size(96, 96)
+        Me.btnTopRight.TabIndex = 2
+        Me.btnTopRight.TabStop = False
+        '
+        'btnMidLeft
+        '
+        Me.btnMidLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMidLeft.Font = New System.Drawing.Font("Trebuchet MS", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnMidLeft.Location = New System.Drawing.Point(16, 112)
+        Me.btnMidLeft.Name = "btnMidLeft"
+        Me.btnMidLeft.Size = New System.Drawing.Size(96, 96)
+        Me.btnMidLeft.TabIndex = 3
+        Me.btnMidLeft.TabStop = False
+        '
+        'btnMidCenter
+        '
+        Me.btnMidCenter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMidCenter.Font = New System.Drawing.Font("Trebuchet MS", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnMidCenter.Location = New System.Drawing.Point(112, 112)
+        Me.btnMidCenter.Name = "btnMidCenter"
+        Me.btnMidCenter.Size = New System.Drawing.Size(96, 96)
+        Me.btnMidCenter.TabIndex = 4
+        Me.btnMidCenter.TabStop = False
+        '
+        'btnMidRight
+        '
+        Me.btnMidRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMidRight.Font = New System.Drawing.Font("Trebuchet MS", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnMidRight.Location = New System.Drawing.Point(208, 112)
+        Me.btnMidRight.Name = "btnMidRight"
+        Me.btnMidRight.Size = New System.Drawing.Size(96, 96)
+        Me.btnMidRight.TabIndex = 5
+        Me.btnMidRight.TabStop = False
+        '
+        'btnLowLeft
+        '
+        Me.btnLowLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnLowLeft.Font = New System.Drawing.Font("Trebuchet MS", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLowLeft.Location = New System.Drawing.Point(16, 208)
+        Me.btnLowLeft.Name = "btnLowLeft"
+        Me.btnLowLeft.Size = New System.Drawing.Size(96, 96)
+        Me.btnLowLeft.TabIndex = 6
+        Me.btnLowLeft.TabStop = False
+        '
+        'btnLowCenter
+        '
+        Me.btnLowCenter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnLowCenter.Font = New System.Drawing.Font("Trebuchet MS", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLowCenter.Location = New System.Drawing.Point(112, 208)
+        Me.btnLowCenter.Name = "btnLowCenter"
+        Me.btnLowCenter.Size = New System.Drawing.Size(96, 96)
+        Me.btnLowCenter.TabIndex = 7
+        Me.btnLowCenter.TabStop = False
+        '
+        'btnLowRight
+        '
+        Me.btnLowRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnLowRight.Font = New System.Drawing.Font("Trebuchet MS", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLowRight.Location = New System.Drawing.Point(208, 208)
+        Me.btnLowRight.Name = "btnLowRight"
+        Me.btnLowRight.Size = New System.Drawing.Size(96, 96)
+        Me.btnLowRight.TabIndex = 8
+        Me.btnLowRight.TabStop = False
+        '
+        'btnSinglePlayer
+        '
+        Me.btnSinglePlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSinglePlayer.Font = New System.Drawing.Font("Trebuchet MS", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSinglePlayer.Location = New System.Drawing.Point(328, 16)
+        Me.btnSinglePlayer.Name = "btnSinglePlayer"
+        Me.btnSinglePlayer.Size = New System.Drawing.Size(160, 40)
+        Me.btnSinglePlayer.TabIndex = 9
+        Me.btnSinglePlayer.TabStop = False
+        Me.btnSinglePlayer.Text = "Single Player"
+        '
+        'btnReset
+        '
+        Me.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnReset.Font = New System.Drawing.Font("Trebuchet MS", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnReset.Location = New System.Drawing.Point(328, 232)
+        Me.btnReset.Name = "btnReset"
+        Me.btnReset.Size = New System.Drawing.Size(160, 40)
+        Me.btnReset.TabIndex = 10
+        Me.btnReset.TabStop = False
+        Me.btnReset.Text = "Back To Menu"
+        Me.btnReset.Visible = False
+        '
+        'lblPlayer1Score
+        '
+        Me.lblPlayer1Score.BackColor = System.Drawing.SystemColors.Control
+        Me.lblPlayer1Score.Font = New System.Drawing.Font("Trebuchet MS", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPlayer1Score.ForeColor = System.Drawing.Color.Black
+        Me.lblPlayer1Score.Location = New System.Drawing.Point(320, 136)
+        Me.lblPlayer1Score.Name = "lblPlayer1Score"
+        Me.lblPlayer1Score.Size = New System.Drawing.Size(176, 32)
+        Me.lblPlayer1Score.TabIndex = 11
+        Me.lblPlayer1Score.Text = "Player 1's Score:"
+        Me.lblPlayer1Score.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblPlayer2Score
+        '
+        Me.lblPlayer2Score.BackColor = System.Drawing.SystemColors.Control
+        Me.lblPlayer2Score.Font = New System.Drawing.Font("Trebuchet MS", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPlayer2Score.ForeColor = System.Drawing.Color.Black
+        Me.lblPlayer2Score.Location = New System.Drawing.Point(320, 168)
+        Me.lblPlayer2Score.Name = "lblPlayer2Score"
+        Me.lblPlayer2Score.Size = New System.Drawing.Size(176, 32)
+        Me.lblPlayer2Score.TabIndex = 12
+        Me.lblPlayer2Score.Text = "Computer: 0"
+        Me.lblPlayer2Score.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'btnMultiPlayer
+        '
+        Me.btnMultiPlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMultiPlayer.Font = New System.Drawing.Font("Trebuchet MS", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnMultiPlayer.Location = New System.Drawing.Point(328, 72)
+        Me.btnMultiPlayer.Name = "btnMultiPlayer"
+        Me.btnMultiPlayer.Size = New System.Drawing.Size(160, 40)
+        Me.btnMultiPlayer.TabIndex = 13
+        Me.btnMultiPlayer.TabStop = False
+        Me.btnMultiPlayer.Text = "Multi Player"
+        '
+        'lblTurn
+        '
+        Me.lblTurn.BackColor = System.Drawing.SystemColors.Control
+        Me.lblTurn.Font = New System.Drawing.Font("Trebuchet MS", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTurn.ForeColor = System.Drawing.Color.Black
+        Me.lblTurn.Location = New System.Drawing.Point(320, 200)
+        Me.lblTurn.Name = "lblTurn"
+        Me.lblTurn.Size = New System.Drawing.Size(176, 32)
+        Me.lblTurn.TabIndex = 14
+        Me.lblTurn.Text = "Player X's Turn"
+        Me.lblTurn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'btnClearBoard
+        '
+        Me.btnClearBoard.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnClearBoard.Font = New System.Drawing.Font("Trebuchet MS", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClearBoard.Location = New System.Drawing.Point(328, 280)
+        Me.btnClearBoard.Name = "btnClearBoard"
+        Me.btnClearBoard.Size = New System.Drawing.Size(160, 40)
+        Me.btnClearBoard.TabIndex = 15
+        Me.btnClearBoard.TabStop = False
+        Me.btnClearBoard.Text = "Clear Board"
+        Me.btnClearBoard.Visible = False
+        '
+        'frmMain
+        '
+        Me.AutoScaleBaseSize = New System.Drawing.Size(10, 25)
+        Me.ClientSize = New System.Drawing.Size(506, 324)
+        Me.Controls.Add(Me.btnClearBoard)
+        Me.Controls.Add(Me.lblTurn)
+        Me.Controls.Add(Me.btnMultiPlayer)
+        Me.Controls.Add(Me.lblPlayer2Score)
+        Me.Controls.Add(Me.lblPlayer1Score)
+        Me.Controls.Add(Me.btnReset)
+        Me.Controls.Add(Me.btnSinglePlayer)
+        Me.Controls.Add(Me.btnLowRight)
+        Me.Controls.Add(Me.btnLowCenter)
+        Me.Controls.Add(Me.btnLowLeft)
+        Me.Controls.Add(Me.btnMidRight)
+        Me.Controls.Add(Me.btnMidCenter)
+        Me.Controls.Add(Me.btnMidLeft)
+        Me.Controls.Add(Me.btnTopRight)
+        Me.Controls.Add(Me.btnTopCenter)
+        Me.Controls.Add(Me.btnTopLeft)
+        Me.Font = New System.Drawing.Font("Trebuchet MS", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "frmMain"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Tic Tac Toe"
+        Me.ResumeLayout(False)
+
+    End Sub
+
+#End Region
 
     Dim turn As String = "Red" 'This variable logs which person's turn it currently is. 'Red' = Player 1 'Blue" = Player 2
     Dim turnCounter As Integer = 1 'This variable keeps track of the turns in a game.
@@ -182,8 +453,8 @@ Public Class frmMain
         lblPlayer1Score.Visible = True
         lblPlayer2Score.Visible = True
         lblTurn.Visible = True
-        btnReset.Location = New Point(527, 12) '(527, 12), (328, 16)
-        btnClearBoard.Location = New Point(527, 73) '(527, 73) (328, 72)
+        btnReset.Location = New Point(328, 16) '(527, 12), (328, 16)
+        btnClearBoard.Location = New Point(328, 72) '(527, 73) (328, 72)
         lblTurn.Text = "Player 1's Turn"
         turn = "Red"
         toggleButtons(True, True)
@@ -274,7 +545,7 @@ Public Class frmMain
         lblPlayer1Score.Visible = True
         lblPlayer2Score.Visible = True
         lblPlayer2Score.Text = "Computer: 0"
-        btnReset.Location = New Point(527, 12) '(527, 12), (328, 16)
+        btnReset.Location = New Point(328, 16) '(527, 12), (328, 16)
         toggleButtons(True, True)
         turn = "Red"
         gameMode = 2
