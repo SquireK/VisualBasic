@@ -3,7 +3,7 @@ Public Class frmMain
 
 #Region " Global Variables "
 
-    Dim direction As String = "left"
+    Dim direction As String = "left" 'This variable determines the direction of the enemy movement.
     Dim score As Integer = 0 'This variable keeps the score.
     Dim lives As Integer = 3 'This variable keeps the number of lives left.
     Dim onMenu As Boolean = True 'This variable keeps track of the game state: on the menu or playing the game.
@@ -163,16 +163,16 @@ Public Class frmMain
                 houseDestruction(c) = 0
                 checkDestructionLevels(c, True)
             Next
-            imgPlayer.Visible = True
-            tmrEnemyMovement.Start()
+            imgPlayer.Visible = True 'This makes the player visible.
+            tmrEnemyMovement.Start() 'This begins the enemy movement.
         Else
-            For c As Integer = 0 To 3
+            For c As Integer = 0 To 3 'This resets the houses and makes them dissapear.
                 houseDestruction(c) = 0
                 checkDestructionLevels(c, False)
             Next
-            imgPlayer.Visible = False
-            tmrEnemyMovement.Stop()
-            resetEnemies()
+            imgPlayer.Visible = False 'This makes the player invisible.
+            tmrEnemyMovement.Stop() 'This stops enemy movement.
+            resetEnemies() 'This resets the enemies' positions to off the screen.
         End If
 
 
@@ -180,25 +180,29 @@ Public Class frmMain
 
     'This subprocedure will reset the enemy's positions to outside the screen.
     Private Sub resetEnemies()
-        Dim i As Integer = 0
+
         Dim loadEnemies As PictureBox() = {enemy00, enemy10, enemy20, enemy30, enemy40, enemy50, enemy60, enemy70, enemy80, enemy90, enemyA0, _
                                            enemy01, enemy11, enemy21, enemy31, enemy41, enemy51, enemy61, enemy71, enemy81, enemy91, enemyA1, _
                                            enemy02, enemy12, enemy22, enemy32, enemy42, enemy52, enemy62, enemy72, enemy82, enemy92, enemyA2, _
                                            enemy03, enemy13, enemy23, enemy33, enemy43, enemy53, enemy63, enemy73, enemy83, enemy93, enemyA3, _
                                            enemy04, enemy14, enemy24, enemy34, enemy44, enemy54, enemy64, enemy74, enemy84, enemy94, enemyA4, _
                                            enemy05, enemy15, enemy25, enemy35, enemy45, enemy55, enemy65, enemy75, enemy85, enemy95, enemyA5}
+        Dim enemyOrigins As Integer() = {728, 280, 776, 280, 824, 280, 872, 280, 920, 280, 968, 280, 1016, 280, 1064, 280, 1112, 280, 1160, 280, 1208, 280, _
+                                         728, 256, 776, 256, 824, 256, 872, 256, 920, 256, 968, 256, 1016, 256, 1064, 256, 1112, 256, 1160, 256, 1208, 256, _
+                                         728, 224, 776, 224, 824, 224, 872, 224, 920, 224, 968, 224, 1016, 224, 1064, 224, 1112, 224, 1160, 224, 1208, 224, _
+                                         728, 200, 776, 200, 824, 200, 872, 200, 920, 200, 968, 200, 1016, 200, 1064, 200, 1112, 200, 1160, 200, 1208, 200, _
+                                         728, 168, 776, 168, 824, 168, 872, 168, 920, 168, 968, 168, 1016, 168, 1064, 168, 1112, 168, 1160, 168, 1208, 168, _
+                                         728, 144, 776, 144, 824, 144, 872, 144, 920, 144, 968, 144, 1016, 144, 1064, 144, 1112, 144, 1160, 144, 1208, 144}
 
-        For c As Integer = 0 To 65
-            loadEnemies(c).Location = New Point(loadEnemies(c).Location.X + (((i * 48) + 728) - loadEnemies(c).Location.X), loadEnemies(c).Location.Y)
-            loadEnemies(c).Visible = True
-            i += 1
-            If i = 10 Then
-                i = 0
-            End If
+        For c As Integer = 0 To 130 Step 2
+            loadEnemies(c / 2).Location = New Point(enemyOrigins(c), enemyOrigins(c + 1))
+            loadEnemies(c / 2).Visible = True
         Next
+
 
     End Sub
 
+    'This subprocedure handles the movement of the enemies.TO DO: movement along the Y axis
     Private Sub tmrEnemyMovement_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmrEnemyMovement.Tick
 
         Dim loadEnemies As PictureBox() = {enemy00, enemy10, enemy20, enemy30, enemy40, enemy50, enemy60, enemy70, enemy80, enemy90, enemyA0, _
@@ -208,23 +212,24 @@ Public Class frmMain
                                            enemy04, enemy14, enemy24, enemy34, enemy44, enemy54, enemy64, enemy74, enemy84, enemy94, enemyA4, _
                                            enemy05, enemy15, enemy25, enemy35, enemy45, enemy55, enemy65, enemy75, enemy85, enemy95, enemyA5}
 
+        'If the enemy is moving left, keep it moving left.
         If direction = "left" Then
             For c As Integer = 0 To 65
                 loadEnemies(c).Location = New Point(loadEnemies(c).Location.X - 15, loadEnemies(c).Location.Y)
             Next
+            'If the enemy gets to the left constant limit, have it turn around.
             If enemyA5.Location.X <= 520 Then
                 direction = "right"
             End If
+            'If the enemy is moving right, keeep it moving right.
         ElseIf direction = "right" Then
             For c As Integer = 0 To 65
                 loadEnemies(c).Location = New Point(loadEnemies(c).Location.X + 15, loadEnemies(c).Location.Y)
             Next
-            If enemyA5.Location.X >= 640 Then
+            'If the enemy gets to the right constant limit, have it turn around.
+            If enemyA5.Location.X >= 632 Then
                 direction = "left"
             End If
-        ElseIf onMenu Then
-            resetEnemies()
         End If
 
     End Sub
-End Class
