@@ -1,23 +1,6 @@
 Public Class frmMain
     Inherits System.Windows.Forms.Form
 
-#Region " Global Variables "
-
-    Dim direction As String = "left" 'This variable determines the direction of the enemy movement.
-    Dim score As Integer = 0 'This variable keeps the score.
-    Dim lives As Integer = 3 'This variable keeps the number of lives left.
-    Dim onMenu As Boolean = True 'This variable keeps track of the game state: on the menu or playing the game.
-    Dim loadingFinished As Boolean = False 'This variable keeps track of whether or not the level has finished loading.
-    Dim houseDestruction(3) As Integer 'This variable keeps the destruction level of each of the houses.
-    Dim enemies As PictureBox() = {enemy00, enemy10, enemy20, enemy30, enemy40, enemy50, enemy60, enemy70, enemy80, enemy90, enemyA0, _
-                                   enemy01, enemy11, enemy21, enemy31, enemy41, enemy51, enemy61, enemy71, enemy81, enemy91, enemyA1, _
-                                   enemy02, enemy12, enemy22, enemy32, enemy42, enemy52, enemy62, enemy72, enemy82, enemy92, enemyA2, _
-                                   enemy03, enemy13, enemy23, enemy33, enemy43, enemy53, enemy63, enemy73, enemy83, enemy93, enemyA3, _
-                                   enemy04, enemy14, enemy24, enemy34, enemy44, enemy54, enemy64, enemy74, enemy84, enemy94, enemyA4, _
-                                   enemy05, enemy15, enemy25, enemy35, enemy45, enemy55, enemy65, enemy75, enemy85, enemy95, enemyA5, enemyBoss}
-
-#End Region
-
     'The menu will run loadMenu() on program run.
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -93,8 +76,15 @@ Public Class frmMain
 
     End Sub
 
-    'Checks to see if the user is on the menu, then quits the game. If the user is in the game, then the menu will load.
+    'Runs menuFunctions.
     Private Sub btnQuit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnQuit.Click
+
+        menuFunctions()
+
+    End Sub
+
+    'Checks to see if the user is on the menu, then quits the game. If the user is in the game, then the menu will load.
+    Private Sub menuFunctions()
 
         If onMenu Then
             Me.Close()
@@ -148,7 +138,7 @@ Public Class frmMain
                 houseList(house).Image.FromFile("house2.png")
             Case 3
                 houseList(house).Image.FromFile("house3.png")
-            Case 4
+            Case Is >= 4
                 houseList(house).Visible = False
                 houseList(house).Image.FromFile("house0.png")
         End Select
@@ -187,12 +177,12 @@ Public Class frmMain
                                            enemy03, enemy13, enemy23, enemy33, enemy43, enemy53, enemy63, enemy73, enemy83, enemy93, enemyA3, _
                                            enemy04, enemy14, enemy24, enemy34, enemy44, enemy54, enemy64, enemy74, enemy84, enemy94, enemyA4, _
                                            enemy05, enemy15, enemy25, enemy35, enemy45, enemy55, enemy65, enemy75, enemy85, enemy95, enemyA5}
-        Dim enemyOrigins As Integer() = {728, 280, 776, 280, 824, 280, 872, 280, 920, 280, 968, 280, 1016, 280, 1064, 280, 1112, 280, 1160, 280, 1208, 280, _
-                                         728, 256, 776, 256, 824, 256, 872, 256, 920, 256, 968, 256, 1016, 256, 1064, 256, 1112, 256, 1160, 256, 1208, 256, _
-                                         728, 224, 776, 224, 824, 224, 872, 224, 920, 224, 968, 224, 1016, 224, 1064, 224, 1112, 224, 1160, 224, 1208, 224, _
-                                         728, 200, 776, 200, 824, 200, 872, 200, 920, 200, 968, 200, 1016, 200, 1064, 200, 1112, 200, 1160, 200, 1208, 200, _
-                                         728, 168, 776, 168, 824, 168, 872, 168, 920, 168, 968, 168, 1016, 168, 1064, 168, 1112, 168, 1160, 168, 1208, 168, _
-                                         728, 144, 776, 144, 824, 144, 872, 144, 920, 144, 968, 144, 1016, 144, 1064, 144, 1112, 144, 1160, 144, 1208, 144}
+        Dim enemyOrigins As Integer() = {728, 238, 776, 238, 824, 238, 872, 238, 920, 238, 968, 238, 1016, 238, 1064, 238, 1112, 238, 1160, 238, 1208, 238, _
+                                         728, 208, 776, 208, 824, 208, 872, 208, 920, 208, 968, 208, 1016, 208, 1064, 208, 1112, 208, 1160, 208, 1208, 208, _
+                                         728, 176, 776, 176, 824, 176, 872, 176, 920, 176, 968, 176, 1016, 176, 1064, 176, 1112, 176, 1160, 176, 1208, 176, _
+                                         728, 152, 776, 152, 824, 152, 872, 152, 920, 152, 968, 152, 1016, 152, 1064, 152, 1112, 152, 1160, 152, 1208, 152, _
+                                         728, 120, 776, 120, 824, 120, 872, 120, 920, 120, 968, 120, 1016, 120, 1064, 120, 1112, 120, 1160, 120, 1208, 120, _
+                                         728, 96, 776, 96, 824, 96, 872, 96, 920, 96, 968, 96, 1016, 96, 1064, 96, 1112, 96, 1160, 96, 1208, 96}
 
         For c As Integer = 0 To 130 Step 2
             loadEnemies(c / 2).Location = New Point(enemyOrigins(c), enemyOrigins(c + 1))
@@ -212,24 +202,37 @@ Public Class frmMain
                                            enemy04, enemy14, enemy24, enemy34, enemy44, enemy54, enemy64, enemy74, enemy84, enemy94, enemyA4, _
                                            enemy05, enemy15, enemy25, enemy35, enemy45, enemy55, enemy65, enemy75, enemy85, enemy95, enemyA5}
 
-        'If the enemy is moving left, keep it moving left.
-        If direction = "left" Then
-            For c As Integer = 0 To 65
-                loadEnemies(c).Location = New Point(loadEnemies(c).Location.X - 15, loadEnemies(c).Location.Y)
-            Next
-            'If the enemy gets to the left constant limit, have it turn around.
-            If enemyA5.Location.X <= 520 Then
-                direction = "right"
+        If Not edgeDetector Then
+            'If the enemy is moving left, keep it moving left.
+            If direction = "left" Then
+                For c As Integer = 0 To 65
+                    loadEnemies(c).Location = New Point(loadEnemies(c).Location.X - 15, loadEnemies(c).Location.Y)
+                Next
+                'If the enemy gets to the left constant limit, have it turn around.
+                If enemyA5.Location.X <= 520 Then
+                    direction = "right"
+                    edgeDetector = True
+                End If
+                'If the enemy is moving right, keeep it moving right.
+            ElseIf direction = "right" Then
+                For c As Integer = 0 To 65
+                    loadEnemies(c).Location = New Point(loadEnemies(c).Location.X + 15, loadEnemies(c).Location.Y)
+                Next
+                'If the enemy gets to the right constant limit, have it turn around.
+                If enemyA5.Location.X >= 632 Then
+                    direction = "left"
+                    edgeDetector = True
+                End If
             End If
-            'If the enemy is moving right, keeep it moving right.
-        ElseIf direction = "right" Then
+        ElseIf edgeDetector Then
+
             For c As Integer = 0 To 65
-                loadEnemies(c).Location = New Point(loadEnemies(c).Location.X + 15, loadEnemies(c).Location.Y)
+                loadEnemies(c).Location = New Point(loadEnemies(c).Location.X, loadEnemies(c).Location.Y + 10)
             Next
-            'If the enemy gets to the right constant limit, have it turn around.
-            If enemyA5.Location.X >= 632 Then
-                direction = "left"
-            End If
+            edgeDetector = False
+
         End If
 
     End Sub
+
+End Class
