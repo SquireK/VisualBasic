@@ -1,6 +1,24 @@
 Public Class frmMain
     Inherits System.Windows.Forms.Form
 
+#Region " Global Variables "
+
+    Dim edgeDetector As Boolean = False 'This variable checks to see if the moving enemies have hit the edge.
+    Dim direction As String = "left" 'This variable determines the direction of the enemy movement.
+    Dim score As Integer = 0 'This variable keeps the score.
+    Dim lives As Integer = 3 'This variable keeps the number of lives left.
+    Dim onMenu As Boolean = True 'This variable keeps track of the game state: on the menu or playing the game.
+    Dim loadingFinished As Boolean = False 'This variable keeps track of whether or not the level has finished loading.
+    Dim houseDestruction(3) As Integer 'This variable keeps the destruction level of each of the houses.
+    Dim enemies As PictureBox() = {enemy00, enemy10, enemy20, enemy30, enemy40, enemy50, enemy60, enemy70, enemy80, enemy90, enemyA0, _
+                                   enemy01, enemy11, enemy21, enemy31, enemy41, enemy51, enemy61, enemy71, enemy81, enemy91, enemyA1, _
+                                   enemy02, enemy12, enemy22, enemy32, enemy42, enemy52, enemy62, enemy72, enemy82, enemy92, enemyA2, _
+                                   enemy03, enemy13, enemy23, enemy33, enemy43, enemy53, enemy63, enemy73, enemy83, enemy93, enemyA3, _
+                                   enemy04, enemy14, enemy24, enemy34, enemy44, enemy54, enemy64, enemy74, enemy84, enemy94, enemyA4, _
+                                   enemy05, enemy15, enemy25, enemy35, enemy45, enemy55, enemy65, enemy75, enemy85, enemy95, enemyA5, enemyBoss}
+
+#End Region
+
     'The menu will run loadMenu() on program run.
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -23,7 +41,10 @@ Public Class frmMain
             lblPnts1.Visible = True
             lblPnts2.Visible = True
             lblPnts3.Visible = True
+            lblEndGame.Visible = False
             btnBegin.Visible = True
+            btnBegin.Text = "Begin"
+            btnBegin.Font = New Font("Lucida Console", 24)
             btnQuit.Visible = False
             btnQuit.Size = New Size(128, 48)
             btnQuit.Font = New Font("Lucida Console", 24)
@@ -49,6 +70,7 @@ Public Class frmMain
             lblPnts1.Visible = False
             lblPnts2.Visible = False
             lblPnts3.Visible = False
+            lblEndGame.Visible = False
             btnBegin.Visible = False
             btnQuit.Visible = False
             btnQuit.Font = New Font("Lucida Console", 10)
@@ -76,14 +98,14 @@ Public Class frmMain
 
     End Sub
 
-    'Runs menuFunctions.
+    'This subprocedure runs menuFunctions().
     Private Sub btnQuit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnQuit.Click
 
         menuFunctions()
 
     End Sub
 
-    'Checks to see if the user is on the menu, then quits the game. If the user is in the game, then the menu will load.
+    'This subprocedure checks to see if the user is on the menu, then quits the game. If the user is in the game, then the menu will load.
     Private Sub menuFunctions()
 
         If onMenu Then
@@ -154,6 +176,7 @@ Public Class frmMain
                 checkDestructionLevels(c, True)
             Next
             imgPlayer.Visible = True 'This makes the player visible.
+            imgPlayer.Location = New Point(336, 384)
             tmrEnemyMovement.Start() 'This begins the enemy movement.
         Else
             For c As Integer = 0 To 3 'This resets the houses and makes them dissapear.
@@ -161,6 +184,7 @@ Public Class frmMain
                 checkDestructionLevels(c, False)
             Next
             imgPlayer.Visible = False 'This makes the player invisible.
+            imgPlayer.Location = New Point(336, 384)
             tmrEnemyMovement.Stop() 'This stops enemy movement.
             resetEnemies() 'This resets the enemies' positions to off the screen.
         End If
@@ -189,6 +213,28 @@ Public Class frmMain
             loadEnemies(c / 2).Visible = True
         Next
 
+
+    End Sub
+
+    'This subprocdure holds code to unload the playing field and tell the player whether they won or lost.
+    'This is fine without the shooting code, but it will need to be changed later.
+    Private Sub endGame(ByVal condition As Integer)
+
+        If condition = 1 Then
+            menuFunctions()
+            imgPnts0.Visible = False
+            imgPnts1.Visible = False
+            imgPnts2.Visible = False
+            imgPnts3.Visible = False
+            lblPnts0.Visible = False
+            lblPnts1.Visible = False
+            lblPnts2.Visible = False
+            lblPnts3.Visible = False
+            lblEndGame.Text = "You Lost!"
+            lblEndGame.Visible = True
+            btnBegin.Font = New Font("Lucida Console", 20)
+            btnBegin.Text = "Replay"
+        End If
 
     End Sub
 
@@ -227,12 +273,24 @@ Public Class frmMain
         ElseIf edgeDetector Then
 
             For c As Integer = 0 To 65
-                loadEnemies(c).Location = New Point(loadEnemies(c).Location.X, loadEnemies(c).Location.Y + 10)
+                loadEnemies(c).Location = New Point(loadEnemies(c).Location.X, loadEnemies(c).Location.Y + 5)
             Next
             edgeDetector = False
 
         End If
+        If enemyA5.Location.Y >= 168 Then
+            endGame(1)
+        End If
 
     End Sub
 
+    Private Sub detectKeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+
+        If e.KeyCode = Keys.A Then
+            imgPlayer.Location = New Point(imgPlayer.Location.X + 50, imgPlayer.Location.Y)
+        ElseIf e.KeyCode = Keys.D Then
+            imgPlayer.Location = New Point(imgPlayer.Location.X - 50, imgPlayer.Location.Y)
+        End If
+
+    End Sub
 End Class
