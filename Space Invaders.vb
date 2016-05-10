@@ -1,6 +1,8 @@
 Public Class frmMain
     Inherits System.Windows.Forms.Form
 
+'program dimensions: 718, 520
+
 #Region " Global Variables "
 
     Dim edgeDetector As Boolean = False 'This variable checks to see if the moving enemies have hit the edge.
